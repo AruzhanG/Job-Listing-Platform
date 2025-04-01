@@ -1,0 +1,7 @@
+<h2>Список вакансий</h2>
+<ul>
+  <li *ngFor="let vacancy of vacancies">
+    <strong>{{ vacancy.title }}</strong> — {{ vacancy.company }} ({{ vacancy.location }})
+    <a [routerLink]="['/vacancy', vacancy.id]">Подробнее</a>
+  </li>
+</ul>
