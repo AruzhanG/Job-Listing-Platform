@@ -1,4 +1,21 @@
-<nav>
-  <a routerLink="/vacancies">Список вакансий</a>
-</nav>
-<router-outlet></router-outlet>
+<div class="app-container">
+  <nav class="navbar">
+    <div class="logo">
+      <a routerLink="/" class="logo-link">JobBoard</a>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/vacancies" class="nav-link">Вакансии</a>
+    </div>
+    <div class="auth-links">
+      <ng-container *ngIf="!isLoggedIn; else loggedInMenu">
+        <a routerLink="/register" class="btn-signup">Зарегистрироваться</a>
+        <a routerLink="/login" class="nav-link">Войти</a>
+      </ng-container>
+      <ng-template #loggedInMenu>
+        <a routerLink="/profile" class="nav-link">Профиль</a>
+        <button (click)="logout()" class="btn-logout">Выйти</button>
+      </ng-template>
+    </div>
+  </nav>
+  <router-outlet></router-outlet>
+</div>

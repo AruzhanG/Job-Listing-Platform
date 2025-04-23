@@ -1,0 +1,61 @@
+<div class="register-container">
+    <h2>Регистрация</h2>
+    
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email" 
+          id="email" 
+          name="email" 
+          [(ngModel)]="registerModel.email" 
+          required 
+          placeholder="Введите email"
+          class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="firstName">Имя</label>
+        <input 
+          type="text" 
+          id="firstName" 
+          name="firstName" 
+          [(ngModel)]="registerModel.firstName" 
+          placeholder="Введите имя"
+          class="form-control">
+      </div>
+  
+      <div class="form-group">
+        <label for="lastName">Фамилия</label>
+        <input 
+          type="text" 
+          id="lastName" 
+          name="lastName" 
+          [(ngModel)]="registerModel.lastName" 
+          placeholder="Введите фамилию"
+          class="form-control">
+      </div>
+      
+      <div class="form-group">
+        <label for="password">Пароль</label>
+        <input 
+          type="password" 
+          id="password" 
+          name="password" 
+          [(ngModel)]="registerModel.password" 
+          required 
+          placeholder="Введите пароль"
+          class="form-control">
+      </div>
+      
+      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+      
+      <div class="form-buttons">
+        <button type="submit" [disabled]="loading" class="btn btn-primary">
+          <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+          Зарегистрироваться
+        </button>
+        <a routerLink="/login" class="btn btn-link">Уже есть аккаунт? Войти</a>
+      </div>
+    </form>
+  </div>
