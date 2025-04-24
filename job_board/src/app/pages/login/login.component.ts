@@ -20,7 +20,7 @@ export class LoginComponent {
   };
   error = '';
   loading = false;
-  returnUrl = '/';
+  returnUrl = '/profile';
 
   constructor(
     private authService: AuthService,
@@ -28,7 +28,7 @@ export class LoginComponent {
     private route: ActivatedRoute
   ) {
     // При загрузке получаем URL для возврата после успешного входа
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/profile';
     
     // Если пользователь уже вошел, перенаправляем
     if (this.authService.isLoggedIn) {

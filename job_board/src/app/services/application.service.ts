@@ -7,7 +7,7 @@ import { Application } from '../models/application';
   providedIn: 'root'
 })
 export class ApplicationService {
-  private apiUrl = 'http://localhost:3000/api'; // Замените на URL вашего API
+  private apiUrl = 'http://127.0.0.1:8000/api'; // Замените на URL вашего API
 
   constructor(private http: HttpClient) {}
 

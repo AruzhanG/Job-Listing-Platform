@@ -10,9 +10,10 @@ export interface LoginRequest {
     password: string;
     firstName?: string;
     lastName?: string;
+    role: string;
   }
   
-  export interface AuthResponse {
-    user: User;
+ export interface AuthResponse {
+    user: User | null; // Теперь user может быть null
     token: string;
   }

@@ -1,46 +1,56 @@
-<div class="profile-container" *ngIf="currentUser">
-    <div class="profile-header">
-      <h2>Личный кабинет</h2>
-      <button (click)="logout()" class="btn btn-outline-danger">Выйти</button>
-    </div>
-    
-    <div class="profile-info">
-      <h3>Информация о пользователе</h3>
-      <div class="user-details">
-        <p><strong>Email:</strong> {{ currentUser.email }}</p>
-        <p *ngIf="currentUser.firstName"><strong>Имя:</strong> {{ currentUser.firstName }}</p>
-        <p *ngIf="currentUser.lastName"><strong>Фамилия:</strong> {{ currentUser.lastName }}</p>
+<div class="wrapper">
+    <div class="sidebar">
+      <div class="user-info">
+        <img src="https://via.placeholder.com/50" alt="Profile Picture" class="profile-pic">
+        <h3>{{ currentUser?.firstName }} {{ currentUser?.lastName }}</h3>
+        <p>{{ currentUser?.role === 'EMPLOYEE' ? 'UI/UX Designer' : (currentUser?.role === 'EMPLOYER' ? 'Employer' : 'Unknown Role') }}</p>
       </div>
+      <nav>
+        <ul>
+          <li><a href="#"><span class="icon">🏠</span> Home</a></li>
+          <li><a href="#" class="active"><span class="icon">👤</span> Profile</a></li>
+          <li><a href="#"><span class="icon">🔔</span> Notifications</a></li>
+          <li><a href="#"><span class="icon">📋</span> Proposals</a></li>
+          <li><a href="#"><span class="icon">⚙️</span> Account settings</a></li>
+        </ul>
+      </nav>
     </div>
-    
-    <div class="applications-section">
-      <h3>Мои отклики</h3>
-      
-      <div *ngIf="loading" class="spinner-container">
-        <div class="spinner-border" role="status">
-          <span class="sr-only">Загрузка...</span>
+    <div class="main-content">
+      <header>
+        <div class="logo">JobBoard</div>
+        <button (click)="logout()" class="logout-btn">Logout <span class="icon">👤</span></button>
+      </header>
+      <div class="content">
+        <h1>Deals</h1>
+        <div class="tabs">
+          <button class="tab active">All Deals</button>
+          <button class="tab">Active</button>
+          <button class="tab">Completed</button>
+          <button class="tab">Archive</button>
         </div>
-      </div>
-      
-      <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
-      
-      <div *ngIf="!loading && applications.length === 0" class="no-applications">
-        У вас пока нет откликов на вакансии.
-      </div>
-      
-      <div *ngIf="!loading && applications.length > 0" class="applications-list">
-        <div *ngFor="let app of applications" class="application-card">
-          <div class="application-details">
-            <h4>{{ app.jobTitle }}</h4>
-            <p class="company-name">{{ app.companyName }}</p>
-            <p class="status"><strong>Статус:</strong> {{ app.status || 'На рассмотрении' }}</p>
-            <p class="date"><strong>Дата отклика:</strong> {{ app.appliedDate | date:'dd.MM.yyyy' }}</p>
+        <div class="deals-list">
+          <div *ngFor="let app of applications" class="deal-card">
+            <div class="deal-info">
+              <h3>{{ app.jobTitle }}</h3>
+              <p>Client: {{ app.companyName }}</p>
+              <p>Status: {{ app.status || 'На рассмотрении' }}</p>
+              <p>Start Date: {{ app.appliedDate | date:'MMM d, yyyy' }}</p>
+              <div class="deal-actions">
+                <button class="action-btn">View Chat</button>
+                <button (click)="withdrawApplication(app.id!)" class="action-btn secondary">Withdraw</button>
+              </div>
+            </div>
+            <div class="deal-price">{{ app.price ?? '$0' }}</div>
           </div>
-          <div class="application-actions">
-            <button (click)="withdrawApplication(app.id!)" class="btn btn-sm btn-outline-danger">
-              Отозвать
-            </button>
+          <div *ngIf="!loading && applications.length === 0" class="no-deals">
+            У вас пока нет откликов на вакансии.
           </div>
+          <div *ngIf="loading" class="spinner-container">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Загрузка...</span>
+            </div>
+          </div>
+          <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
         </div>
       </div>
     </div>

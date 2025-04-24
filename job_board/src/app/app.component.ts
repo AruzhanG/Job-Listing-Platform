@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
   import { RouterOutlet, Router, RouterModule, NavigationEnd } from '@angular/router';
   import { AuthService } from './services/auth.service';
   import { HttpClientModule } from '@angular/common/http';
+  import { Observable } from 'rxjs';
+import { User } from './models/user';
 
   @Component({
     selector: 'app-root',
@@ -11,32 +13,14 @@ import { Component, OnInit } from '@angular/core';
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
   })
-  export class AppComponent implements OnInit {
-    title = 'job_board';
-    isLoggedIn: boolean = false;
+  export class AppComponent {
+    currentUser$: Observable<User | null>;
 
-    constructor(
-      private authService: AuthService,
-      private router: Router
-    ) {
-      console.log('AppComponent инициализирован');
-      this.router.events.subscribe(event => {
-        if (event instanceof NavigationEnd) {
-          console.log('Текущий маршрут:', event.url);
-        }
-      });
-    }
+  constructor(private authService: AuthService) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
-    ngOnInit(): void {
-      console.log('AppComponent ngOnInit');
-      this.authService.currentUser$.subscribe(user => {
-        this.isLoggedIn = this.authService.isLoggedIn;
-        console.log('Состояние авторизации:', this.isLoggedIn);
-      });
-    }
-
-    logout(): void {
-      this.authService.logout();
-      this.router.navigate(['/login']);
-    }
+  logout(): void {
+    this.authService.logout();
+  }
   }

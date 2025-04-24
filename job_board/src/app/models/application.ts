@@ -6,4 +6,5 @@ export interface Application {
     companyName?: string;
     status?: string;
     appliedDate?: Date;
+    price?: string; 
   }

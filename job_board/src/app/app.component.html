@@ -7,7 +7,7 @@
       <a routerLink="/vacancies" class="nav-link">Вакансии</a>
     </div>
     <div class="auth-links">
-      <ng-container *ngIf="!isLoggedIn; else loggedInMenu">
+      <ng-container *ngIf="!(currentUser$ | async)">
         <a routerLink="/register" class="btn-signup">Зарегистрироваться</a>
         <a routerLink="/login" class="nav-link">Войти</a>
       </ng-container>

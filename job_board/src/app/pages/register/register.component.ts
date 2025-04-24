@@ -17,7 +17,8 @@ export class RegisterComponent {
     email: '',
     password: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    role: ''
   };
   error = '';
   loading = false;
@@ -26,9 +27,8 @@ export class RegisterComponent {
     private authService: AuthService,
     private router: Router
   ) {
-    // Если пользователь уже вошел, перенаправляем
     if (this.authService.isLoggedIn) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/profile']);
     }
   }
 
@@ -36,12 +36,19 @@ export class RegisterComponent {
     this.loading = true;
     this.error = '';
     
+    if (!this.registerModel.role) {
+      this.error = 'Пожалуйста, выберите роль';
+      this.loading = false;
+      return;
+    }
+
     this.authService.register(this.registerModel)
       .subscribe({
         next: () => {
-          this.router.navigate(['/']);
+          this.router.navigate(['/profile']);
         },
         error: err => {
+          console.error('Registration error:', err); // Log the full error
           this.error = err.error?.message || 'Ошибка регистрации. Пожалуйста, попробуйте еще раз.';
           this.loading = false;
         }
